@@ -42,9 +42,9 @@ pub fn derive_impl_error_with_tracing_for_struct_with_method(
                     .iter()
                     .map(|e| {
                         match e.get_where_was_one_or_many() {
-                            crate::where_was::WhereWasOneOrMany::One(where_was_with_addition) => where_was_with_addition.get_file_line_column(source_place_type, git_info),
-                            crate::where_was::WhereWasOneOrMany::Many(where_was_with_addition_vec) => {
-                                let mut where_was_handle = source
+                            tufa_common::where_was::WhereWasOneOrMany::One(where_was_with_addition) => where_was_with_addition.get_file_line_column(source_place_type, git_info),
+                            tufa_common::where_was::WhereWasOneOrMany::Many(where_was_with_addition_vec) => {
+                                let mut where_was_handle = where_was_with_addition_vec
                                 .iter()
                                 .map(|e| format!("{}, ", e.get_file_line_column(source_place_type, git_info)))
                                 .fold(String::from(""), |mut acc, elem| {
@@ -63,10 +63,10 @@ pub fn derive_impl_error_with_tracing_for_struct_with_method(
                         acc.push_str(&elem);
                         acc
                     });
-                    let where_was_handle = format!("{}, {}", where_was.file_line_column(), where_was_vec_as_string);
+                    // let where_was_handle = format!("{}, {}", where_was.file_line_column(), where_was_vec_as_string);
                     tracing::error!(
                         error = error_handle,
-                        where_was = where_was_handle,
+                        // where_was = where_was_handle,
                     );
                 }
                 tufa_common::config::source_place_type::SourcePlaceType::Github => {
@@ -85,9 +85,9 @@ pub fn derive_impl_error_with_tracing_for_struct_with_method(
                     .iter()
                     .map(|e| {
                         match e.get_where_was_one_or_many() {
-                            crate::where_was::WhereWasOneOrMany::One(where_was_with_addition) => where_was_with_addition.get_file_line_column(source_place_type, git_info),
-                            crate::where_was::WhereWasOneOrMany::Many(where_was_with_addition_vec) => {
-                                let mut where_was_handle = source
+                            tufa_common::where_was::WhereWasOneOrMany::One(where_was_with_addition) => where_was_with_addition.get_file_line_column(source_place_type, git_info),
+                            tufa_common::where_was::WhereWasOneOrMany::Many(where_was_with_addition_vec) => {
+                                let mut where_was_handle = where_was_with_addition_vec
                                 .iter()
                                 .map(|e| format!("{}, ", e.get_file_line_column(source_place_type, git_info)))
                                 .fold(String::from(""), |mut acc, elem| {
@@ -106,7 +106,7 @@ pub fn derive_impl_error_with_tracing_for_struct_with_method(
                         acc.push_str(&elem);
                         acc
                     });
-                    let where_was_handle = format!("{}, {}", where_was.github_file_line_column(), where_was_vec_as_string);
+                    let where_was_handle = format!("{}, {}", where_was.github_file_line_column(git_info), where_was_vec_as_string);
                     tracing::error!(
                         error = error_handle,
                         where_was = where_was_handle,
@@ -147,9 +147,9 @@ pub fn derive_impl_error_with_tracing_for_struct_with_method(
                     .iter()
                     .map(|(key, e)| {
                         match e.get_where_was_one_or_many() {
-                            crate::where_was::WhereWasOneOrMany::One(where_was_with_addition) => format!("{} {}", where_was_with_addition.get_file_line_column(source_place_type, git_info), key),
-                            crate::where_was::WhereWasOneOrMany::Many(where_was_with_addition_vec) => {
-                                let mut where_was_handle = source
+                            tufa_common::where_was::WhereWasOneOrMany::One(where_was_with_addition) => format!("{} {}", where_was_with_addition.get_file_line_column(source_place_type, git_info), key),
+                            tufa_common::where_was::WhereWasOneOrMany::Many(where_was_with_addition_vec) => {
+                                let mut where_was_handle = where_was_with_addition_vec
                                 .iter()
                                 .map(|(key, e)| format!("{} {}, ", e.get_file_line_column(source_place_type, git_info), key))
                                 .fold(String::from(""), |mut acc, elem| {
@@ -190,9 +190,9 @@ pub fn derive_impl_error_with_tracing_for_struct_with_method(
                     .iter()
                     .map(|(key, e)| {
                         match e.get_where_was_one_or_many() {
-                            crate::where_was::WhereWasOneOrMany::One(where_was_with_addition) => format!("{} {}", where_was_with_addition.get_file_line_column(source_place_type, git_info), key),
-                            crate::where_was::WhereWasOneOrMany::Many(where_was_with_addition_vec) => {
-                                let mut where_was_handle = source
+                            tufa_common::where_was::WhereWasOneOrMany::One(where_was_with_addition) => format!("{} {}", where_was_with_addition.get_file_line_column(source_place_type, git_info), key),
+                            tufa_common::where_was::WhereWasOneOrMany::Many(where_was_with_addition_vec) => {
+                                let mut where_was_handle = where_was_with_addition_vec
                                 .iter()
                                 .map(|(key, e)| format!("{} {}, ", e.get_file_line_column(source_place_type, git_info), key))
                                 .fold(String::from(""), |mut acc, elem| {
@@ -211,7 +211,7 @@ pub fn derive_impl_error_with_tracing_for_struct_with_method(
                         acc.push_str(&elem);
                         acc
                     });
-                    let where_was_handle = format!("{}, {}", where_was.github_file_line_column(), where_was_vec_as_string);
+                    let where_was_handle = format!("{}, {}", where_was.github_file_line_column(git_info), where_was_vec_as_string);
                     tracing::error!(
                         error = error_handle,
                         where_was = where_was_handle,
