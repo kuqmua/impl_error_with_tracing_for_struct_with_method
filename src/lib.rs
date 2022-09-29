@@ -129,7 +129,6 @@ pub fn derive_impl_error_with_tracing_for_struct_with_method(
             };
         }
     } else if first_source_type_ident_as_string == *"HashMap" {
-        //
         quote::quote! {
             match source_place_type {
                 tufa_common::config::source_place_type::SourcePlaceType::Source => {
