@@ -113,18 +113,70 @@ pub fn derive_impl_error_with_tracing_for_struct_with_method(
                     );
                 }
                 tufa_common::config::source_place_type::SourcePlaceType::None => {
-                    let mut error_handle = source
-                    .iter()
-                    .map(|e| e.get_source())
-                    .fold(String::from(""), |mut acc, elem| {
-                        acc.push_str(&elem);
-                        acc
-                    });
-                    if !error_handle.is_empty() {
-                        error_handle.pop();
-                        error_handle.pop();
+                    match source_place_type {
+                        tufa_common::config::source_place_type::SourcePlaceType::Source => {
+                            let mut error_handle = source
+                            .iter()
+                            .map(|e| e.get_source())
+                            .fold(String::from(""), |mut acc, elem| {
+                                acc.push_str(&elem);
+                                acc
+                            });
+                            if !error_handle.is_empty() {
+                                error_handle.pop();
+                                error_handle.pop();
+                            }
+                            //todo
+                            let where_was_handle = where_was.file_line_column();
+                            // let where_was_handle = source.get_bunyan_with_additional_where_was(
+                            //     &where_was,
+                            //     source_place_type,
+                            //     git_info,
+                            // );
+                            tracing::error!(
+                                error = error_handle,
+                                where_was = where_was_handle,
+                            );
+                        }
+                        tufa_common::config::source_place_type::SourcePlaceType::Github => {
+                            let mut error_handle = source
+                            .iter()
+                            .map(|e| e.get_source())
+                            .fold(String::from(""), |mut acc, elem| {
+                                acc.push_str(&elem);
+                                acc
+                            });
+                            if !error_handle.is_empty() {
+                                error_handle.pop();
+                                error_handle.pop();
+                            }
+                            //todo
+                            let where_was_handle = where_was.github_file_line_column(git_info);
+                            // let where_was_handle = source.get_bunyan_with_additional_where_was(
+                            //     &where_was,
+                            //     source_place_type,
+                            //     git_info,
+                            // );
+                            tracing::error!(
+                                error = error_handle,
+                                where_was = where_was_handle,
+                            );
+                        }
+                        tufa_common::config::source_place_type::SourcePlaceType::None => {
+                            let mut error_handle = source
+                            .iter()
+                            .map(|e| e.get_source())
+                            .fold(String::from(""), |mut acc, elem| {
+                                acc.push_str(&elem);
+                                acc
+                            });
+                            if !error_handle.is_empty() {
+                                error_handle.pop();
+                                error_handle.pop();
+                            }
+                            tracing::error!(error = error_handle);
+                        }
                     }
-                    tracing::error!(error = error_handle);
                 }
             };
         }
@@ -146,6 +198,7 @@ pub fn derive_impl_error_with_tracing_for_struct_with_method(
                     let where_was_vec_as_string = source
                     .iter()
                     .map(|(key, e)| {
+                        // format!("{} {}, ", e.get_bunyan_where_was(source_place_type, git_info), key)
                         match e.get_where_was_one_or_many() {
                             tufa_common::where_was::WhereWasOneOrMany::One(where_was_with_addition) => format!("{} {}", where_was_with_addition.get_file_line_column(source_place_type, git_info), key),
                             tufa_common::where_was::WhereWasOneOrMany::Many(where_was_with_addition_vec) => {
@@ -189,6 +242,7 @@ pub fn derive_impl_error_with_tracing_for_struct_with_method(
                     let where_was_vec_as_string = source
                     .iter()
                     .map(|(key, e)| {
+                        // format!("{} {}, ", e.get_bunyan_where_was(source_place_type, git_info), key)
                         match e.get_where_was_one_or_many() {
                             tufa_common::where_was::WhereWasOneOrMany::One(where_was_with_addition) => format!("{} {}", where_was_with_addition.get_file_line_column(source_place_type, git_info), key),
                             tufa_common::where_was::WhereWasOneOrMany::Many(where_was_with_addition_vec) => {
@@ -218,25 +272,109 @@ pub fn derive_impl_error_with_tracing_for_struct_with_method(
                     );
                 }
                 tufa_common::config::source_place_type::SourcePlaceType::None => {
-                    let mut error_handle = source
-                    .iter()
-                    .map(|(key, e)| format!("{} {}, ", key, e.get_source()))
-                    .fold(String::from(""), |mut acc, elem| {
-                        acc.push_str(&elem);
-                        acc
-                    });
-                    if !error_handle.is_empty() {
-                        error_handle.pop();
-                        error_handle.pop();
+                    match source_place_type {
+                        tufa_common::config::source_place_type::SourcePlaceType::Source => {
+                            let mut error_handle = source
+                            .iter()
+                            .map(|(key, e)| format!("{} {}, ", key, e.get_source()))
+                            .fold(String::from(""), |mut acc, elem| {
+                                acc.push_str(&elem);
+                                acc
+                            });
+                            if !error_handle.is_empty() {
+                                error_handle.pop();
+                                error_handle.pop();
+                            }
+                            //todo
+                            let where_was_handle = where_was.file_line_column();
+                            // let where_was_handle = source.get_bunyan_with_additional_where_was(
+                            //     &where_was,
+                            //     source_place_type,
+                            //     git_info,
+                            // );
+                            tracing::error!(
+                                error = error_handle,
+                                where_was = where_was_handle,
+                            );
+                        }
+                        tufa_common::config::source_place_type::SourcePlaceType::Github => {
+                            let mut error_handle = source
+                            .iter()
+                            .map(|(key, e)| format!("{} {}, ", key, e.get_source()))
+                            .fold(String::from(""), |mut acc, elem| {
+                                acc.push_str(&elem);
+                                acc
+                            });
+                            if !error_handle.is_empty() {
+                                error_handle.pop();
+                                error_handle.pop();
+                            }
+                            //todo
+                            let where_was_handle = where_was.github_file_line_column(git_info);
+                            // let where_was_handle = source.get_bunyan_with_additional_where_was(
+                            //     &where_was,
+                            //     source_place_type,
+                            //     git_info,
+                            // );
+                            tracing::error!(
+                                error = error_handle,
+                                where_was = where_was_handle,
+                            );
+                        }
+                        tufa_common::config::source_place_type::SourcePlaceType::None => {
+                            let mut error_handle = source
+                            .iter()
+                            .map(|(key, e)| format!("{} {}, ", key, e.get_source()))
+                            .fold(String::from(""), |mut acc, elem| {
+                                acc.push_str(&elem);
+                                acc
+                            });
+                            if !error_handle.is_empty() {
+                                error_handle.pop();
+                                error_handle.pop();
+                            }
+                            tracing::error!(error = error_handle);
+                        }
                     }
-                    tracing::error!(error = error_handle);
                 }
             };
         }
     } else {
         quote::quote! {
-            let error_handle = source.get_source();
-            tracing::error!(error = error_handle);
+            match source_place_type {
+                tufa_common::config::source_place_type::SourcePlaceType::Source => {
+                    let error_handle = source.get_source();
+                    //todo
+                    let where_was_handle = where_was.file_line_column();
+                    // let where_was_handle = source.get_bunyan_with_additional_where_was(
+                    //     &where_was,
+                    //     source_place_type,
+                    //     git_info,
+                    // );
+                    tracing::error!(
+                        error = error_handle,
+                        where_was = where_was_handle,
+                    );
+                }
+                tufa_common::config::source_place_type::SourcePlaceType::Github => {
+                    let error_handle = source.get_source();
+                    //todo
+                    let where_was_handle = where_was.github_file_line_column(git_info);
+                    // let where_was_handle = source.get_bunyan_with_additional_where_was(
+                    //     &where_was,
+                    //     source_place_type,
+                    //     git_info,
+                    // );
+                    tracing::error!(
+                        error = error_handle,
+                        where_was = where_was_handle,
+                    );
+                }
+                tufa_common::config::source_place_type::SourcePlaceType::None => {
+                    let error_handle = source.get_source();
+                    tracing::error!(error = error_handle);
+                }
+            }
         }
     };
     let gen = quote::quote! {
