@@ -235,7 +235,7 @@ pub fn derive_impl_error_with_tracing_for_struct_with_method(
         }
     } else {
         quote::quote! {
-            let error_handle = e.get_source();
+            let error_handle = source.get_source();
             tracing::error!(error = error_handle);
         }
     };
